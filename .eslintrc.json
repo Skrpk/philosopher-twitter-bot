@@ -1,8 +1,7 @@
 {
     "env": {
-        "node": true,
-        "commonjs": true,
-        "es2020": true
+        "browser": true,
+        "es2021": true
     },
     "extends": [
         "eslint:recommended",
@@ -10,30 +9,12 @@
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 11
+        "ecmaVersion": 12,
+        "sourceType": "module"
     },
     "plugins": [
         "@typescript-eslint"
     ],
     "rules": {
-        "indent": [
-            "error",
-            "tab"
-        ],
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "no-useless-catch": "off",
-        "@typescript-eslint/no-var-requires": "off",
-        "@typescript-eslint/explicit-module-boundary-types": "off"
     }
 }
