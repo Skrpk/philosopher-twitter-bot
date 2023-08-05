@@ -46,11 +46,12 @@ server.post<{ Body: BodyType }>('/post', async (request, reply) => {
     await twitterClient.v2.tweet({
       media: { media_ids: [mediaId] },
     });
-    fs.unlink(`./${process.env.IMAGE_NAME}`, () => console.log('File deleted'));
     return reply.status(200).send('success');
   } catch (error) {
     console.log(error);
     return 'failed';
+  } finally {
+    fs.unlink(`./${process.env.IMAGE_NAME}`, () => console.log('File deleted'));
   }
 });
 

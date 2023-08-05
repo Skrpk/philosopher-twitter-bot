@@ -1,9 +1,15 @@
 import nodeHtmlToImage from 'node-html-to-image';
+import fs from 'fs';
 import * as dotenv from 'dotenv';
 
 import { StorageHandler } from './storageHandler';
 
 dotenv.config();
+
+export type StoreType = {
+  imgIndex: number;
+  quotesIndex: number;
+};
 
 const storage = new StorageHandler();
 
@@ -37,8 +43,10 @@ const html = `<html>
     .text-wrapper {
       padding: 80px;
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
       justify-content: center;
+      gap: 40px;
     }
     .text {
       font-family: 'Inter', sans-serif;
@@ -54,11 +62,10 @@ const html = `<html>
     </div>
     <div class="text-wrapper">
       <p class="text">
-        Берегись также, чтобы люди, заметив твое непочтение к родителям,
-        не стали сообща презирать тебя, и чтобы тебе не остаться вовсе
-        без друзей, потому что, как только они заметят твою неблагодарность
-        к родителям, никто не может быть уверен, что, сделав тебе доброе дело,
-        получит благодарность.“ —  Сократ
+        {{ text }}
+      </p>
+      <p class="text">
+        {{ author }}
       </p>
     </div>
   </div>
@@ -66,15 +73,44 @@ const html = `<html>
 </html>
 `;
 
+const getStore = async () => {
+  const data = await fs.promises.readFile('./store.json', 'utf8');
+  return JSON.parse(data) as StoreType;
+};
+
+const setStore = async (data: StoreType) => {
+  await fs.promises.writeFile('./store.json', JSON.stringify(data));
+};
+
+const getQuoteAndLength = async (quotesIndex: number) => {
+  const { quotes, quotesListLength } = await storage.getQuotes();
+  return {
+    quote: quotes[quotesIndex],
+    quotesListLength,
+  };
+};
+
 export const generateImage = async () => {
   try {
+    const { imgIndex, quotesIndex } = await getStore();
     const images = await storage.list();
-    const imgUrl = `https://drive.google.com/uc?export=view&id=${images[4].id}`;
-    await nodeHtmlToImage({
-      output: `./${process.env.IMAGE_NAME}`,
-      content: { imgUrl },
-      html,
-    });
+    const {
+      quote: { text, author },
+      quotesListLength,
+    } = await getQuoteAndLength(quotesIndex);
+    const imgUrl = `https://drive.google.com/uc?export=view&id=${images[imgIndex].id}`;
+
+    await Promise.all([
+      setStore({
+        imgIndex: imgIndex !== images.length ? imgIndex + 1 : 0,
+        quotesIndex: quotesIndex !== quotesListLength ? quotesIndex + 1 : 0,
+      }),
+      nodeHtmlToImage({
+        output: `./${process.env.IMAGE_NAME}`,
+        content: { imgUrl, text, author },
+        html,
+      }),
+    ]);
   } catch (err) {
     throw new Error(err);
   }
