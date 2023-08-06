@@ -74,12 +74,29 @@ const html = `<html>
 </html>
 `;
 
+async function isFileExist(path) {
+  try {
+    return (await promises.stat(path)).isFile();
+  } catch (e) {
+    return false;
+  }
+}
+
 const getStore = async () => {
-  const data = await promises.readFile(
-    path.join(process.cwd(), 'store.json'),
-    'utf8'
+  if (await isFileExist(path.join('/tmp/', 'store.json'))) {
+    const data = await promises.readFile(
+      path.join(process.cwd(), 'store.json'),
+      'utf8'
+    );
+    return JSON.parse(data) as StoreType;
+  }
+
+  await promises.writeFile(
+    '/tmp/store.json',
+    JSON.stringify({ imgIndex: 0, quotesIndex: 0 })
   );
-  return JSON.parse(data) as StoreType;
+
+  return { imgIndex: 0, quotesIndex: 0 };
 };
 
 const setStore = async (data: StoreType) => {
@@ -109,7 +126,7 @@ export const generateImage = async () => {
 
     await Promise.all([
       setStore({
-        imgIndex: imgIndex !== images.length ? imgIndex + 1 : 0,
+        imgIndex: imgIndex !== images?.length ? imgIndex + 1 : 0,
         quotesIndex: quotesIndex !== quotesListLength ? quotesIndex + 1 : 0,
       }),
       nodeHtmlToImage({
