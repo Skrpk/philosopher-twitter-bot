@@ -6,7 +6,8 @@ import { Configuration, OpenAIApi } from 'openai';
 const { TwitterApi } = require('twitter-api-v2');
 
 import { generateImage } from './imgGenerator';
-dotenv.config();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
 
 /// TWITTER
 const twitterClient = new TwitterApi({
