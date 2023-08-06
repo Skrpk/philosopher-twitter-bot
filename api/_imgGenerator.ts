@@ -3,6 +3,7 @@ import { promises } from 'fs';
 import * as dotenv from 'dotenv';
 
 import { StorageHandler } from './_storageHandler';
+import path from 'path';
 
 dotenv.config();
 
@@ -74,12 +75,18 @@ const html = `<html>
 `;
 
 const getStore = async () => {
-  const data = await promises.readFile('./_store.json', 'utf8');
+  const data = await promises.readFile(
+    path.join(process.cwd(), 'store.json'),
+    'utf8'
+  );
   return JSON.parse(data) as StoreType;
 };
 
 const setStore = async (data: StoreType) => {
-  await promises.writeFile('./_store.json', JSON.stringify(data));
+  await promises.writeFile(
+    path.join(process.cwd(), 'store.json'),
+    JSON.stringify(data)
+  );
 };
 
 const getQuoteAndLength = async (quotesIndex: number) => {
