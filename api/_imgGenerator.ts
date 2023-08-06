@@ -75,7 +75,7 @@ const html = `<html>
 </html>
 `;
 
-async function isFileExist(path) {
+async function isFileExist(path: string) {
   try {
     return (await promises.stat(path)).isFile();
   } catch (e) {
