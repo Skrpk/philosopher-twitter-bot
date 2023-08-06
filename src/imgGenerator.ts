@@ -74,12 +74,12 @@ const html = `<html>
 `;
 
 const getStore = async () => {
-  const data = await promises.readFile('./store.json', 'utf8');
+  const data = await promises.readFile('/tmp/store.json', 'utf8');
   return JSON.parse(data) as StoreType;
 };
 
 const setStore = async (data: StoreType) => {
-  await promises.writeFile('./store.json', JSON.stringify(data));
+  await promises.writeFile('/tmp/store.json', JSON.stringify(data));
 };
 
 const getQuoteAndLength = async (quotesIndex: number) => {
