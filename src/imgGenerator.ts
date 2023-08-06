@@ -1,7 +1,6 @@
 import nodeHtmlToImage from 'node-html-to-image';
 import { promises } from 'fs';
 import * as dotenv from 'dotenv';
-import puppeteer from 'puppeteer-core';
 
 import { StorageHandler } from './storageHandler';
 import path from 'path';
@@ -117,8 +116,10 @@ const getQuoteAndLength = async (quotesIndex: number) => {
 
 export const generateImage = async () => {
   try {
-    const { imgIndex, quotesIndex } = await getStore();
-    const images = await storage.list();
+    const [{ imgIndex, quotesIndex }, images] = await Promise.all([
+      getStore(),
+      storage.list(),
+    ]);
     const {
       quote: { text, author },
       quotesListLength,
@@ -131,7 +132,6 @@ export const generateImage = async () => {
         quotesIndex: quotesIndex !== quotesListLength ? quotesIndex + 1 : 0,
       }),
       nodeHtmlToImage({
-        puppeteer,
         puppeteerArgs: {
           executablePath: '/app/.chromedriver/bin/chromedriver',
         },

@@ -1,5 +1,4 @@
 import fastify from 'fastify';
-import * as dotenv from 'dotenv';
 import fs from 'fs';
 import { Configuration, OpenAIApi } from 'openai';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
