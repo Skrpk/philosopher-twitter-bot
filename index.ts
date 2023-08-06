@@ -69,7 +69,7 @@ const html = `<html>
     content: {
       imgUrl:
         'https://opengraph.githubassets.com/fabc49973118bdb6678f5d444914bad7df46c1472aa863884a0e4e0a830f1588/puppeteer/puppeteer/issues/4796',
-      text: 'text',
+      text: 'text1',
       author: 'author',
     },
     html,
