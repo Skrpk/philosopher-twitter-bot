@@ -85,7 +85,7 @@ async function isFileExist(path) {
 const getStore = async () => {
   if (await isFileExist(path.join('/tmp/', 'store.json'))) {
     const data = await promises.readFile(
-      path.join(process.cwd(), 'store.json'),
+      path.join('/tmp/', 'store.json'),
       'utf8'
     );
     return JSON.parse(data) as StoreType;
@@ -101,7 +101,7 @@ const getStore = async () => {
 
 const setStore = async (data: StoreType) => {
   await promises.writeFile(
-    path.join(process.cwd(), 'store.json'),
+    path.join('/tmp/', 'store.json'),
     JSON.stringify(data)
   );
 };
