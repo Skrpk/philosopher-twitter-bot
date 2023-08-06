@@ -1,5 +1,6 @@
 import nodeHtmlToImage from 'node-html-to-image';
 import edgeChromium from 'chrome-aws-lambda';
+import puppeteer from 'puppeteer-core';
 import { promises } from 'fs';
 import * as dotenv from 'dotenv';
 
@@ -137,6 +138,7 @@ export const generateImage = async () => {
           args: edgeChromium.args,
           headless: false,
         },
+        puppeteer: puppeteer,
         output: `./${process.env.IMAGE_NAME}`,
         content: { imgUrl, text, author },
         html,
