@@ -135,8 +135,8 @@ export const generateImage = async () => {
       nodeHtmlToImage({
         puppeteerArgs: {
           executablePath,
-          args: edgeChromium.args,
           headless: false,
+          args: edgeChromium.args,
         },
         puppeteer: puppeteer,
         output: `./${process.env.IMAGE_NAME}`,
