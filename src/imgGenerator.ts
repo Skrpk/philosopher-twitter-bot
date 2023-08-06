@@ -1,5 +1,5 @@
 import nodeHtmlToImage from 'node-html-to-image';
-import fs from 'fs';
+import { promises } from 'fs';
 import * as dotenv from 'dotenv';
 
 import { StorageHandler } from './storageHandler';
@@ -74,12 +74,12 @@ const html = `<html>
 `;
 
 const getStore = async () => {
-  const data = await fs.promises.readFile('./store.json', 'utf8');
+  const data = await promises.readFile('./store.json', 'utf8');
   return JSON.parse(data) as StoreType;
 };
 
 const setStore = async (data: StoreType) => {
-  await fs.promises.writeFile('./store.json', JSON.stringify(data));
+  await promises.writeFile('./store.json', JSON.stringify(data));
 };
 
 const getQuoteAndLength = async (quotesIndex: number) => {
