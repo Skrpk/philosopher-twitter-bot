@@ -1,4 +1,5 @@
 import nodeHtmlToImage from 'node-html-to-image';
+import edgeChromium from 'chrome-aws-lambda';
 import { promises } from 'fs';
 import * as dotenv from 'dotenv';
 
@@ -116,6 +117,7 @@ const getQuoteAndLength = async (quotesIndex: number) => {
 
 export const generateImage = async () => {
   try {
+    const executablePath = await edgeChromium.executablePath;
     const { imgIndex, quotesIndex } = await getStore();
     const images = await storage.list();
     const {
@@ -130,6 +132,11 @@ export const generateImage = async () => {
         quotesIndex: quotesIndex !== quotesListLength ? quotesIndex + 1 : 0,
       }),
       nodeHtmlToImage({
+        puppeteerArgs: {
+          executablePath,
+          args: edgeChromium.args,
+          headless: false,
+        },
         output: `./${process.env.IMAGE_NAME}`,
         content: { imgUrl, text, author },
         html,
