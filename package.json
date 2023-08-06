@@ -24,7 +24,7 @@
   "dependencies": {
     "@netlify/functions": "^1.6.0",
     "@vercel/node": "^2.15.8",
-    "chrome-aws-lambda": "10.1.0",
+    "chrome-aws-lambda": "7.0.0",
     "dotenv": "^8.6.0",
     "fastify": "^3.14.2",
     "fastify-cors": "^5.2.0",
