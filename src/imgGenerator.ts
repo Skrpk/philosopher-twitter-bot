@@ -106,7 +106,7 @@ export const generateImage = async () => {
         quotesIndex: quotesIndex !== quotesListLength ? quotesIndex + 1 : 0,
       }),
       nodeHtmlToImage({
-        output: `./${process.env.IMAGE_NAME}`,
+        output: `tmp/${process.env.IMAGE_NAME}`,
         content: { imgUrl, text, author },
         html,
       }),

@@ -41,7 +41,7 @@ server.post<{ Body: BodyType }>('/post', async (request, reply) => {
   try {
     await generateImage();
     const mediaId = await twitterClient.v1.uploadMedia(
-      `./${process.env.IMAGE_NAME}`
+      `/tmp/${process.env.IMAGE_NAME}`
     );
     await twitterClient.v2.tweet({
       media: { media_ids: [mediaId] },
@@ -51,7 +51,9 @@ server.post<{ Body: BodyType }>('/post', async (request, reply) => {
     console.log(error);
     return 'failed';
   } finally {
-    fs.unlink(`./${process.env.IMAGE_NAME}`, () => console.log('File deleted'));
+    fs.unlink(`/tmp/${process.env.IMAGE_NAME}`, () =>
+      console.log('File deleted')
+    );
   }
 });
 

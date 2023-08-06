@@ -139,7 +139,7 @@ export const generateImage = async () => {
           args: edgeChromium.args,
         },
         puppeteer: puppeteer,
-        output: `./${process.env.IMAGE_NAME}`,
+        output: `/tmp/${process.env.IMAGE_NAME}`,
         content: { imgUrl, text, author },
         html,
       }),
