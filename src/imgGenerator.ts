@@ -1,6 +1,7 @@
 import nodeHtmlToImage from 'node-html-to-image';
 import { promises } from 'fs';
 import * as dotenv from 'dotenv';
+import puppeteer from 'puppeteer-core';
 
 import { StorageHandler } from './storageHandler';
 import path from 'path';
@@ -51,7 +52,7 @@ const html = `<html>
     }
     .text {
       font-family: 'Inter', sans-serif;
-      font-size: 3rem;
+      font-size: 4rem;
       color: #fff;
     }
   </style>
@@ -130,6 +131,10 @@ export const generateImage = async () => {
         quotesIndex: quotesIndex !== quotesListLength ? quotesIndex + 1 : 0,
       }),
       nodeHtmlToImage({
+        puppeteer,
+        puppeteerArgs: {
+          executablePath: '/app/.chromedriver/bin/chromedriver',
+        },
         output: `tmp/${process.env.IMAGE_NAME}`,
         content: { imgUrl, text, author },
         html,
