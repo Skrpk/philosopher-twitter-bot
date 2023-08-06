@@ -4,7 +4,7 @@ const { TwitterApi } = require('twitter-api-v2');
 import * as dotenv from 'dotenv';
 import fs from 'fs';
 
-import { generateImage } from '../src/imgGenerator';
+import { generateImage } from './_imgGenerator';
 
 dotenv.config();
 
