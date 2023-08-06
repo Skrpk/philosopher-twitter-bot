@@ -77,6 +77,10 @@ server.post<{ Body: BodyType }>('/reply', async (request, reply) => {
   }
 });
 
+server.get('/', async (request, reply) => {
+  return reply.status(200).send('Hello world');
+});
+
 server.listen({ port }, (err, address) => {
   if (err) {
     console.error(err);
@@ -85,4 +89,4 @@ server.listen({ port }, (err, address) => {
   console.log(`Server listening at ${address}`);
 });
 
-export default server;
+module.exports = server;
