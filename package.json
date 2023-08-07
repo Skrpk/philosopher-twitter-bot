@@ -11,6 +11,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "vercel-build": "tsc",
+    "heroku-postbuild": "mkdir ./.cache && mv /app/.cache/puppeteer ./.cache",
     "lint": "eslint --ext .js,.ts .",
     "test": "jest --coverage",
     "test:watch": "npm run test -- --watchAll"
