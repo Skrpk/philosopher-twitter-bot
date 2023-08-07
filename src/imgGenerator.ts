@@ -140,6 +140,7 @@ export const generateImage = async () => {
         html,
       }),
     ]);
+    console.log('Image generated');
   } catch (err) {
     throw new Error(err);
   }
