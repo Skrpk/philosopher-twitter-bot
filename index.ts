@@ -64,6 +64,7 @@ const html = `<html>
   nodeHtmlToImage({
     puppeteerArgs: {
       executablePath: '/app/.chromedriver/bin/chromedriver',
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     },
     output: `tmp/${process.env.IMAGE_NAME}`,
     content: {
