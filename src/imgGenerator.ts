@@ -132,10 +132,7 @@ export const generateImage = async () => {
         quotesIndex: quotesIndex !== quotesListLength ? quotesIndex + 1 : 0,
       }),
       nodeHtmlToImage({
-        puppeteerArgs: {
-          executablePath: '/app/.chromedriver/bin/chromedriver',
-        },
-        output: `tmp/${process.env.IMAGE_NAME}`,
+        output: `/tmp/${process.env.IMAGE_NAME || 'image.png'}`,
         content: { imgUrl, text, author },
         html,
       }),
