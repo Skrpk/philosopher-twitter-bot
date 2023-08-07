@@ -132,6 +132,9 @@ export const generateImage = async () => {
         quotesIndex: quotesIndex !== quotesListLength ? quotesIndex + 1 : 0,
       }),
       nodeHtmlToImage({
+        puppeteerArgs: {
+          args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        },
         output: `/tmp/${process.env.IMAGE_NAME || 'image.png'}`,
         content: { imgUrl, text, author },
         html,
