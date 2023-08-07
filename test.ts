@@ -66,7 +66,7 @@ const html = `<html>
       // executablePath: '/app/.chromedriver/bin/chromedriver',
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     },
-    output: `tmp/${process.env.IMAGE_NAME}`,
+    output: `/tmp/${process.env.IMAGE_NAME}`,
     content: {
       imgUrl:
         'https://opengraph.githubassets.com/fabc49973118bdb6678f5d444914bad7df46c1472aa863884a0e4e0a830f1588/puppeteer/puppeteer/issues/4796',
