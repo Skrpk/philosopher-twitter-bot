@@ -30,6 +30,7 @@ const server = fastify();
 
 type BodyType = {
   message: string;
+  note?: string;
 };
 
 const CONTEXT =
@@ -59,13 +60,15 @@ server.post<{ Body: BodyType }>('/post', async (request, reply) => {
 
 server.post<{ Body: BodyType }>('/reply', async (request, reply) => {
   try {
-    const { message } = request.body;
+    const { message, note } = request.body;
     const chatCompletion = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [
         {
           role: 'user',
-          content: `${CONTEXT} '${message}'. ${REPLY_SIZE}. ${NOTE}`,
+          content: `${CONTEXT} '${message}'. ${REPLY_SIZE}. ${NOTE}. ${
+            note || ''
+          }}`,
         },
       ],
     });
