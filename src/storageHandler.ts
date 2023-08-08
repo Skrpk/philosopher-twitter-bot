@@ -32,12 +32,21 @@ export class StorageHandler {
 
   async getQuotes(): Promise<GetQuoteReturnType> {
     try {
-      const { quotes } = await this.getFile<{ quotes: Qoute[] }>(
-        process.env.GOOGLE_DRIVE_QUOTES_ID
-      );
+      const sheets = new sheets_v4.Sheets({
+        auth: this.auth,
+      });
+      const {
+        data: { values },
+      } = await sheets.spreadsheets.values.get({
+        spreadsheetId: process.env.GOOGLE_SHEETS_QUOTES_ID,
+        range: 'A:B',
+      });
+      values.shift();
+      console.log({ values });
+
       return {
-        quotes,
-        quotesListLength: quotes.length,
+        quotes: values.map(([text, author]) => ({ text, author })),
+        quotesListLength: values.length,
       };
     } catch (err) {
       throw new Error(err);

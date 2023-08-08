@@ -29,8 +29,8 @@ const twitterClient = new TwitterApi({
     console.log(error);
     return 1;
   } finally {
-    // fs.unlink(`/tmp/${process.env.IMAGE_NAME}`, () =>
-    //   console.log('File deleted')
-    // );
+    fs.unlink(`/tmp/${process.env.IMAGE_NAME}`, () =>
+      console.log('File deleted')
+    );
   }
 })();
