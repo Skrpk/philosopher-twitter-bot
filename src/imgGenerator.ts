@@ -1,9 +1,7 @@
 import nodeHtmlToImage from 'node-html-to-image';
-import { promises } from 'fs';
 import * as dotenv from 'dotenv';
 
 import { StorageHandler } from './storageHandler';
-import path from 'path';
 
 dotenv.config();
 
@@ -74,38 +72,6 @@ const html = `<html>
 </html>
 `;
 
-async function isFileExist(path: string) {
-  try {
-    return (await promises.stat(path)).isFile();
-  } catch (e) {
-    return false;
-  }
-}
-
-const getStore = async () => {
-  if (await isFileExist(path.join('/tmp/', 'store.json'))) {
-    const data = await promises.readFile(
-      path.join('/tmp/', 'store.json'),
-      'utf8'
-    );
-    return JSON.parse(data) as StoreType;
-  }
-
-  await promises.writeFile(
-    '/tmp/store.json',
-    JSON.stringify({ imgIndex: 0, quotesIndex: 0 })
-  );
-
-  return { imgIndex: 0, quotesIndex: 0 };
-};
-
-const setStore = async (data: StoreType) => {
-  await promises.writeFile(
-    path.join('/tmp/', 'store.json'),
-    JSON.stringify(data)
-  );
-};
-
 const getQuoteAndLength = async (quotesIndex: number) => {
   const { quotes, quotesListLength } = await storage.getQuotes();
   return {
@@ -117,7 +83,7 @@ const getQuoteAndLength = async (quotesIndex: number) => {
 export const generateImage = async () => {
   try {
     const [{ imgIndex, quotesIndex }, images] = await Promise.all([
-      getStore(),
+      storage.getStore(),
       storage.list(),
     ]);
     const {
@@ -127,7 +93,7 @@ export const generateImage = async () => {
     const imgUrl = `https://drive.google.com/uc?export=view&id=${images[imgIndex].id}`;
 
     await Promise.all([
-      setStore({
+      storage.setStore({
         imgIndex: imgIndex !== images.length ? imgIndex + 1 : 0,
         quotesIndex: quotesIndex !== quotesListLength ? quotesIndex + 1 : 0,
       }),

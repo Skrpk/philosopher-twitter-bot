@@ -1,6 +1,8 @@
-// import puppeteer from 'puppeteer';
-// import fs from 'fs';
-
+import puppeteer from 'puppeteer';
+import fs from 'fs';
+import * as dotenv from 'dotenv';
+dotenv.config();
+import { StorageHandler } from './src/storageHandler';
 // SHUFFLE QUOTES
 
 // (async () => {
@@ -59,3 +61,12 @@
 
 //   await browser.close();
 // })();
+
+// POPULATE TO SHEETS
+
+(async () => {
+  const storage = new StorageHandler();
+  const storeQuotesJSON = await fs.promises.readFile('./quotes.json', 'utf8');
+  const storeQuotesParsed = JSON.parse(storeQuotesJSON);
+  await storage.populateQuotesToSheets(storeQuotesParsed.quotes);
+})();
