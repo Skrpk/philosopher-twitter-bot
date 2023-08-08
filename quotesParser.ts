@@ -66,7 +66,8 @@ import { StorageHandler } from './src/storageHandler';
 
 (async () => {
   const storage = new StorageHandler();
-  const storeQuotesJSON = await fs.promises.readFile('./quotes.json', 'utf8');
-  const storeQuotesParsed = JSON.parse(storeQuotesJSON);
-  await storage.populateQuotesToSheets(storeQuotesParsed.quotes);
+  console.log('>>>>', await storage.getQuotes());
+  // const storeQuotesJSON = await fs.promises.readFile('./quotes.json', 'utf8');
+  // const storeQuotesParsed = JSON.parse(storeQuotesJSON);
+  // await storage.populateQuotesToSheets(storeQuotesParsed.quotes);
 })();

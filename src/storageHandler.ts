@@ -42,7 +42,6 @@ export class StorageHandler {
         range: 'A:B',
       });
       values.shift();
-      console.log({ values });
 
       return {
         quotes: values.map(([text, author]) => ({ text, author })),
@@ -110,6 +109,7 @@ export class StorageHandler {
     });
 
     const [imgIndex, quotesIndex] = res.data.values;
+    console.log('Completed getting store', imgIndex, quotesIndex);
     return {
       imgIndex: Number(imgIndex),
       quotesIndex: Number(quotesIndex),
