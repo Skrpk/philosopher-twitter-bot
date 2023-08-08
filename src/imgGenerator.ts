@@ -74,6 +74,7 @@ const html = `<html>
 
 const getQuoteAndLength = async (quotesIndex: number) => {
   const { quotes, quotesListLength } = await storage.getQuotes();
+  console.log('>>>>>', 'getQuoteAndLength', quotesIndex, quotes[0]);
   return {
     quote: quotes[quotesIndex],
     quotesListLength,
