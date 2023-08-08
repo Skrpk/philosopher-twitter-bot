@@ -108,7 +108,7 @@ export class StorageHandler {
       range: 'A2:B2',
     });
 
-    const [imgIndex, quotesIndex] = res.data.values;
+    const [[imgIndex, quotesIndex]] = res.data.values;
     console.log('Completed getting store', imgIndex, quotesIndex);
     return {
       imgIndex: Number(imgIndex),
